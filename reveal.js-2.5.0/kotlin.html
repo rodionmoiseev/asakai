@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Kotlinプログラミング言語</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1>Kotlin</h1>
+					<h2>プログラミング言語紹介</h2>
+					<p>
+						<small>朝会発表 2013/08/26 モイセーフロディオン</small>
+					</p>
+				</section>
+				<section>
+					<section>
+						<h2>Kotlin概要</h2>
+<pre><code class="scala">
+fun main(args: Array&lt;String&gt;): Unit { 
+    println("Hello world!") 
+}
+</code></pre>
+					</section>
+					<section>
+						<p>JetBrains社作 (その他IntelliJ IDEA Java IDEを開発)</p>
+						<p>2011年開発開始</p>
+						<p>Apache Public Licence 2</p>
+						<p>現在開発中</p>
+					</section>
+					<section>
+						<p>JVM用とJavascript用コンパイラーあり(.NET検討中)</p>
+						<p>基本機能がJavaと共通</p>
+						<ul>
+							<li>静的型付き</li>
+							<li>オブジェクト指向</li>
+							<li>ジェネリックス対応</li>
+							<li>例外 ... など</li>
+						</ul>
+					</section>
+					<section>
+						<p>はやりの無名関数や高階関数に対応(Scala, Java 8に同じ)
+<pre><code class="scala">
+array(-2, -1, 0, 1, 2).filter {it > 0} // -> (1, 2)
+</code></pre>
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Kotlin特徴</h2>
+					</section>
+					<section>
+						<p>静的なNull Pointer Exception抑制
+<pre><code class="scala">
+var a : String = "abc" 
+a = null // エラー!
+</code></pre>
+
+<code>null</code>の可能性は明示的に指定
+
+<pre><code class="scala">
+var b : String? = "abc" 
+b = null // OK
+b.length() // エラー: nullの可能性
+</code></pre>
+
+<code>null</code>チェックは必須
+
+<pre><code class="scala">
+val length : Int = if (b!=null) b.length() else -1
+//または
+val length : Int? = b?.length() // OK
+</code></pre>
+						</p>
+						<p>
+							<small>NPEを起こしたい人は <code>b!!.length()</code>でどうぞ</small>
+						</p>
+					</section>
+					<section>
+						<p>Primitive型廃止</p>
+						<p>動的に最適化をしてくれる:
+<pre><code class="scala">
+val i : Int = 1 // -> int
+val i : Int? = 1 // -> Integer
+</code></pre>
+						</p>
+					</section>
+					<section>
+						<p>パターンマッチングとスマートキャスト
+<pre><code class="scala">
+val x : Any = ...
+when (x) { 
+  is Int -> print(x) 
+  is List<*> -> print(x.size()) // スマートキャスト!
+  !is Number -> print("Not even a number") 
+  else -> print("can't do anything") 
+}
+</code></pre>
+</p>
+					</section>
+					<section>
+						<p>その他、Scala/Javaにない機能
+						<ul>
+							<li>静的拡張関数 (例: <code>123.isZero()</code>)</li>
+							<li>inline関数で高階関数のオーバヘッド削減</li>
+							<li>移譲(delegation)パターンを言語レベルで対応</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h3>ご清聴ありがとうございました</h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
